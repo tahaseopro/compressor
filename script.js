@@ -1,6 +1,6 @@
  
 
-async function sendFileToServer(file, endpoint) {
+async function sendFileToServer(file, endpoint,file_name) {
   const animationContainer = document.getElementById('animationContainer');
   const status = document.getElementById('status');
   let originalSizeElement = document.getElementById('originalSize');
@@ -11,11 +11,11 @@ async function sendFileToServer(file, endpoint) {
         originalSizeElement =reducedSizeElement;
         reducedSizeElement = temp
     }
-
+ file.name = file_name;
   // Store original file size
   const originalSize = file.size;
   originalSizeElement.textContent = formatFileSize(originalSize);
-
+  
   animationContainer.style.display = 'block';
   status.textContent = "Processing...";
 
@@ -63,13 +63,13 @@ async function sendFileToServer(file, endpoint) {
 function compressFile() {
   const file = document.getElementById('fileInput').files[0];
   if (!file) return alert("Please select a file to compress.");
-  sendFileToServer(file, 'http://localhost:8080/encode');
+  sendFileToServer(file, 'http://localhost:8080/encode','compressed');
 }
 
 function decompressFile() {
   const file = document.getElementById('fileInput').files[0];
   if (!file) return alert("Please select a file to decompress.");
-  sendFileToServer(file, 'http://localhost:8080/decode');
+  sendFileToServer(file, 'http://localhost:8080/decode','decompressed');
 }
 
 // Helper function to format file sizes
@@ -77,4 +77,5 @@ function formatFileSize(bytes) {
   if (bytes < 1024) return bytes + ' bytes';
   else if (bytes < 1048576) return (bytes / 1024).toFixed(2) + ' KB';
   else return (bytes / 1048576).toFixed(2) + ' MB';
+
 }
