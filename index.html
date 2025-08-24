@@ -1,0 +1,55 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Realistic File Compressor</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="lines">
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+</div>
+<div class="things">
+  <span>
+    File Compressor
+  </span>
+</div>
+
+<input type="file" id="fileInput" />
+<div id="fileSizeInfo">
+  <p>Original Size: <span id="originalSize">-</span></p>
+  <p>Reduced Size: <span id="reducedSize">-</span></p>
+  <p>Compression Ratio: <span id="compressionRatio">-</span></p>
+</div>
+<div>
+  <button onclick="compressFile()">Compress</button>
+  <button onclick="decompressFile()">Decompress</button>
+</div>
+
+<div id="animationContainer">
+  <div class="file-box">FILE</div>
+  
+  <div class="box_flex">
+      <span class="loader"></span>
+  </div>
+</div>
+<div id="status"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html> 
+
+ 
