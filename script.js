@@ -19,8 +19,7 @@ async function sendFileToServer(file, endpoint) {
    let newFileName;
   if (endpoint === 'http://localhost:8080/encode') {
     // For compression: compressed.extension
-    const fileExt = file.name.split('.').pop();
-    newFileName = `compressed.${fileExt}`;
+    newFileName = `compressed.huff`;
   } else if (endpoint === 'http://localhost:8080/decode') {
     // For decompression: decompressed.extension
     const fileExt = file.name.split('.').pop();
@@ -94,4 +93,5 @@ function formatFileSize(bytes) {
   else return (bytes / 1048576).toFixed(2) + ' MB';
 
 }
+
 
