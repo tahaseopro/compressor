@@ -1,6 +1,6 @@
  
 
-async function sendFileToServer(file, endpoint,file_name) {
+async function sendFileToServer(file, endpoint) {
   const animationContainer = document.getElementById('animationContainer');
   const status = document.getElementById('status');
   let originalSizeElement = document.getElementById('originalSize');
@@ -11,11 +11,26 @@ async function sendFileToServer(file, endpoint,file_name) {
         originalSizeElement =reducedSizeElement;
         reducedSizeElement = temp
     }
- file.name = file_name;
   // Store original file size
   const originalSize = file.size;
   originalSizeElement.textContent = formatFileSize(originalSize);
-  
+
+ //return file name
+   let newFileName;
+  if (endpoint === 'http://localhost:8080/encode') {
+    // For compression: compressed.extension
+    const fileExt = file.name.split('.').pop();
+    newFileName = `compressed.${fileExt}`;
+  } else if (endpoint === 'http://localhost:8080/decode') {
+    // For decompression: decompressed.extension
+    const fileExt = file.name.split('.').pop();
+    newFileName = `decompressed.${fileExt}`;
+  } else {
+    newFileName = file.name;
+  }
+
+
+ 
   animationContainer.style.display = 'block';
   status.textContent = "Processing...";
 
@@ -48,7 +63,7 @@ async function sendFileToServer(file, endpoint,file_name) {
 
     const a = document.createElement('a');
     a.href = url;
-    a.download = file.name;
+    a.download = newFileName;
     a.click();
     
     status.textContent = "Done!";
@@ -63,13 +78,13 @@ async function sendFileToServer(file, endpoint,file_name) {
 function compressFile() {
   const file = document.getElementById('fileInput').files[0];
   if (!file) return alert("Please select a file to compress.");
-  sendFileToServer(file, 'http://localhost:8080/encode','compressed');
+  sendFileToServer(file, 'http://localhost:8080/encode');
 }
 
 function decompressFile() {
   const file = document.getElementById('fileInput').files[0];
   if (!file) return alert("Please select a file to decompress.");
-  sendFileToServer(file, 'http://localhost:8080/decode','decompressed');
+  sendFileToServer(file, 'http://localhost:8080/decode');
 }
 
 // Helper function to format file sizes
@@ -79,3 +94,4 @@ function formatFileSize(bytes) {
   else return (bytes / 1048576).toFixed(2) + ' MB';
 
 }
+
